@@ -22,7 +22,9 @@ class Book(db.Model):
         return "<Title: {}>".format(self.title)
 @app.route("/", methods=["GET", "POST"])
 def home():
+    books = None
     if request.form:
+	    try:
         book = Book(title=request.form.get("title"))
         db.session.add(book)
         db.session.commit() 
