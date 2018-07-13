@@ -28,6 +28,13 @@ def home():
         db.session.commit() 
     return render_template("home.html")
 @app.route("/update", methods=["POST"])
+@app.route("/delete", methods=["POST"])
+def delete():
+    title = request.form.get("title")
+    book = Book.query.filter_by(title=title).first()
+    db.session.delete(book)
+    db.session.commit()
+    return redirect("/")
 def update():
     newtitle = request.form.get("newtitle")
     oldtitle = request.form.get("oldtitle")
