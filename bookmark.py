@@ -27,6 +27,14 @@ def home():
         db.session.add(book)
         db.session.commit() 
     return render_template("home.html")
+@app.route("/update", methods=["POST"])
+def update():
+    newtitle = request.form.get("newtitle")
+    oldtitle = request.form.get("oldtitle")
+    book = Book.query.filter_by(title=oldtitle).first()
+    book.title = newtitle
+    db.session.commit()
+    return redirect("/")	
   
 if __name__ == "__main__":
     app.run(debug=True)
